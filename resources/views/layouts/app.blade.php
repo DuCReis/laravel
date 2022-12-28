@@ -13,9 +13,24 @@
         <h5 class="my-0 mr-md-auto font-weight-normal">Laravel App</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="{{ route('home.index') }}" >Home</a>
-            <a href="{{ route('home.contact') }}">Contact</a>
-            <a href="{{ route('posts.index') }}">Blog Posts</a>
-            <a href=" {{ route('posts.create') }}">Add Blog Post</a>
+            <a class="p-2 text-dark" href="{{ route('home.contact') }}">Contact</a>
+            <a class="p-2 text-dark" href="{{ route('posts.index') }}">Blog Posts</a>
+            <a class="p-2 text-dark" href=" {{ route('posts.create') }}">Add</a>
+
+            @guest
+                <a class="p-2 text-dark" href=" {{ route('register') }}">Register</a>
+                <a class="p-2 text-dark" href=" {{ route('login') }}">Login</a>
+            @else
+                <a class="p-2 text-dark" href=" {{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();"
+                >Logout ({{ Auth::user()->name }})</a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                    style="display: none;">
+                    @csrf
+                    </form>
+            @endguest
         </nav>
     </div>
     <div class="container">
