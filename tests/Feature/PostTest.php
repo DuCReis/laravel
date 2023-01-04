@@ -12,7 +12,7 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
     use RefreshDatabase;
-
+    
     
     public function testNoBlogPostsWhenNothingInDatabase()
     {
@@ -59,7 +59,8 @@ class PostTest extends TestCase
             'content' => 'At least 10 characters'
         ];
 
-        $this->post('/posts', $params)
+        $this->actingAs($this->user())
+            ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
 
@@ -73,7 +74,8 @@ class PostTest extends TestCase
             'content' => 'x'
         ];
 
-        $this->post('/posts', $params)
+        $this->actingAs($this->user())
+            ->post('/posts', $params)
             ->assertStatus(302)
             ->assertSessionHas('errors');
         
@@ -95,7 +97,8 @@ class PostTest extends TestCase
             'content' => 'Content was changed'
         ];
 
-        $this->put("/posts/{$post->id}", $params)
+        $this->actingAs($this->user())
+            ->put("/posts/{$post->id}", $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
 
@@ -114,7 +117,8 @@ class PostTest extends TestCase
 
         $this->assertDatabaseHas('blog_posts', $post->toArray());
 
-        $this->delete("/posts/{$post->id}")
+        $this->actingAs($this->user())
+            ->delete("/posts/{$post->id}")
             ->assertStatus(302)
             ->assertSessionHas('status');
 
