@@ -129,7 +129,9 @@ class PostTest extends TestCase
 
     private function createDummyBlogPost(): BlogPost
     {
-        $post = BlogPost::factory()->newTitle()->create();
+        $post = BlogPost::factory()->newTitle()->create([
+            'user_id' =>$this->user()->id,
+        ]);
  
         return $post;
     }

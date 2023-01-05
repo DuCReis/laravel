@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         User::factory()->create([
             'name' => 'Duarte',
             'email' => 'duartelucas@teste.pt',
+            'is_admin' => true
         ]);
 
         User::factory($userCount)->create();
